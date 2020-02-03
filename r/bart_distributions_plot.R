@@ -117,7 +117,13 @@ plot.new()
 plot.window(xlim = c(0, 1), ylim = c(0, 1))
 points(rep(.1, 4), y = seq(.2, .8, length.out = 4), pch = 15:18, col = cols,
        cex = 2.4)
-text(x = rep(.1, 4) + .1, y = seq(.2, .8, length.out = 4), cex = 2,
+# text(x = rep(.1, 4) + .1, y = seq(.2, .8, length.out = 4), cex = 1.6,
+#      labels = c(expression(paste(BART[uniform],symbol("\u003A"), sep = "")),
+#                 expression(paste(BART[normal-L],symbol("\u003A"), sep = "")),
+#                 expression(paste(BART[normal-M],symbol("\u003A"), sep = "")),
+#                 expression(paste(BART[normal-H],symbol("\u003A"), sep = ""))),
+#      offset = 0, adj = 0)
+text(x = rep(.15, 4) + .1, y = seq(.2, .8, length.out = 4)-.05, cex = 2,
      labels = c("~ U(1, 64)", "~ N(32, 6)", "~ N(32, 12)", "~ N(32, 18)"),
      offset = 0, adj = 0, vfont=c("script", "bold"))
 dev.off()
