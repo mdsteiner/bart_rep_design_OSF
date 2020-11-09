@@ -13,6 +13,7 @@ library(viridis)
 library(see)
 library(patchwork)
 library(GGally)
+library(xtable)
 source("r/s1/functions.R")
 
 
@@ -64,6 +65,50 @@ s1 %>%
     N = n()
   ) %>%
   View()
+
+# for table in SM
+s1 %>%
+  mutate(cond_dist = factor(cond_dist,
+                            levels = c("uniform", "normal_high",
+                                       "normal_moderate", "normal_low"))) %>%
+  group_by(cond_dist) %>%
+  summarise(
+    adj_bart_score = paste0(round(mean(adj_bart_score), 2), " (",
+                            round(sd(adj_bart_score), 2), ")"),
+    posterior_belief = paste0(round(mean(posterior_belief), 2), " (",
+                              round(sd(posterior_belief), 2), ")"),
+    n_explosions = paste0(round(mean(n_explosions), 2), " (",
+                            round(sd(n_explosions), 2), ")"),
+    dist_form_belief = paste0(round(mean(distribution_rating), 2), " (",
+                             round(sd(distribution_rating), 2), ")"),
+    grips = paste0(round(mean(grips_score), 2), " (",
+                   round(sd(grips_score), 2), ")"),
+    soep_gen = paste0(round(mean(soep_gen), 2), " (",
+                        round(sd(soep_gen), 2), ")"),
+    soep_driving = paste0(round(mean(soep_driving), 2), " (",
+                          round(sd(soep_driving), 2), ")"),
+    soep_faith = paste0(round(mean(soep_faith), 2), " (",
+                        round(sd(soep_faith), 2), ")"),
+    soep_finance = paste0(round(mean(soep_finance), 2), " (",
+                          round(sd(soep_finance), 2), ")"),
+    soep_health = paste0(round(mean(soep_health), 2), " (",
+                         round(sd(soep_health), 2), ")"),
+    soep_leisure = paste0(round(mean(soep_leisure), 2), " (",
+                      round(sd(soep_leisure), 2), ")"),
+    soep_occupation = paste0(round(mean(soep_occupation), 2), " (",
+                      round(sd(soep_occupation), 2), ")"),
+    rlrisk_cigarettes_b = paste0(round(mean(rlrisk_cigarettes_b), 2)),
+    rlrisk_drink_b = paste0(round(mean(rlrisk_drink_b), 2)),
+    rlrisk_gamble_b = paste0(round(mean(rlrisk_gamble_b), 2)),
+    rlrisk_invest_b = paste0(round(mean(rlrisk_invest_b), 2)),
+    rlrisk_speed_b = paste0(round(mean(rlrisk_speed_b), 2)),
+    rlrisk_sport_b = paste0(round(mean(rlrisk_sport_b), 2)),
+    N = as.character(n())
+  ) %>%
+  ungroup() %>% 
+  pivot_longer(cols = adj_bart_score:N, names_to = "indicator", values_to = "value") %>% 
+  pivot_wider(names_from = cond_dist) %>% 
+  xtable() %>% print(include.rownames = FALSE)
 
 # distributions of real-life risk measures
 s1 %>%
@@ -655,8 +700,8 @@ plot.window(xlim = c(0, 1), ylim = c(0, 1))
 segments(c(.01, .01), c(.4, .6), c(.15, .15), c(.4, .6), lty = c(2, 1),
          xpd = TRUE, lwd = 2)
 
-text(c("actual behavior\n(adjusted\nBART scores)", "belief about\noptimal behavior"),
-     x = c(.23, .23), y = c(.4, .6), adj = 0, offset = 0, cex = 1.6)
+text(c("actual behavior\n(mean adjusted\n BART scores)", "mean belief about\noptimal behavior"),
+     x = c(.23, .23), y = c(.4, .6), adj = 0, offset = 0, cex = 1.5)
 
 dev.off()
 
