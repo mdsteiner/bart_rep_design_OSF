@@ -700,7 +700,7 @@ plot.window(xlim = c(0, 1), ylim = c(0, 1))
 segments(c(.01, .01), c(.4, .6), c(.15, .15), c(.4, .6), lty = c(2, 1),
          xpd = TRUE, lwd = 2)
 
-text(c("actual behavior\n(mean adjusted\n BART scores)", "mean belief about\noptimal behavior"),
+text(c("actual behavior\n(mean adjusted\n BART scores)", "belief about\noptimal behavior\n(mean rating)"),
      x = c(.23, .23), y = c(.4, .6), adj = 0, offset = 0, cex = 1.5)
 
 dev.off()

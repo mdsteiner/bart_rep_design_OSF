@@ -76,7 +76,7 @@ rlrisk <- rlrisk %>%
                                rating2 == "week" ~ 7,
                                rating2 == "month" ~ 30.5,
                                rating2 == "year" ~ 365),
-         times_per_day = rating1 * rating2_n) %>%
+         times_per_day = rating1 / rating2_n) %>%
   select(partid, quest_label, times_per_day) %>%
   distinct(partid, quest_label, .keep_all = TRUE) %>%
   pivot_wider(names_from = quest_label,
